@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivega • Pechi 💜</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    overflow:hidden;
+    font-family:Georgia,serif;
+    color:white;
+    background:
+    radial-gradient(circle at 50% 25%,#55306f,#1d0c32 45%,#05020a);
+}
+
+#stars{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+}
+
+.star{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:white;
+    box-shadow:0 0 10px #d6a8ff;
+    animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:.15}
+    to{opacity:1}
+}
+
+.page{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    overflow:auto;
+    z-index:2;
+}
+
+.page.active{
+    display:flex;
+    animation:appear .7s ease;
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:scale(.95);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.card{
+    width:min(900px,95vw);
+    max-height:94vh;
+    overflow:auto;
+    padding:30px 22px;
+    text-align:center;
+    background:rgba(8,3,18,.92);
+    border:1px solid #d09aff;
+    box-shadow:0 0 45px rgba(180,80,255,.2);
+}
+
+.kicker{
+    margin-bottom:15px;
+    color:#d9a9ff;
+    font-size:11px;
+    letter-spacing:5px;
+}
+
+h1{
+    color:#f8ebff;
+    font-size:clamp(45px,10vw,85px);
+    text-shadow:
+    0 0 15px #b75cff,
+    0 0 35px #6b2aa5;
+}
+
+h2{
+    margin:15px;
+    color:#e5c7ff;
+}
+
+p{
+    max-width:680px;
+    margin:15px auto;
+    color:#d7cadf;
+    line-height:1.9;
+}
+
+.line{
+    width:100px;
+    height:1px;
+    margin:20px auto;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #e0adff,
+        transparent
+    );
+}
+
+.btn{
+    margin:9px;
+    padding:14px 24px;
+    color:white;
+    background:#15072d;
+    border:1px solid #d09aff;
+    cursor:pointer;
+    font-family:Georgia,serif;
+    letter-spacing:2px;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 25px #a94fff;
+}
+
+.bigIcon{
+    margin-bottom:10px;
+    font-size:65px;
+}
+
+
+/* BOOK */
+
+.book{
+    width:min(620px,90vw);
+    min-height:300px;
+    margin:25px auto;
+    padding:35px 25px;
+    border:2px solid #b878ff;
+    background:
+    linear-gradient(
+        135deg,
+        rgba(75,30,100,.7),
+        rgba(15,5,28,.9)
+    );
+    box-shadow:0 0 30px rgba(180,80,255,.18);
+}
+
+.bookTitle{
+    color:#f1d9ff;
+    font-size:35px;
+}
+
+
+/* PHOTOS */
+
+.photoArea{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin:22px auto;
+}
+
+.photoFrame{
+    width:min(62vw,440px);
+    height:min(52vh,430px);
+    padding:7px;
+    background:
+    linear-gradient(
+        135deg,
+        #ff91d8,
+        #9d5cff,
+        #a78bff
+    );
+    box-shadow:0 0 30px rgba(180,80,255,.2);
+}
+
+.photoFrame img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    background:#030207;
+}
+
+.arrow{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    color:white;
+    background:#120622;
+    border:1px solid #d09aff;
+    font-size:27px;
+    cursor:pointer;
+}
+
+.counter{
+    margin-top:10px;
+    color:#d9a9ff;
+    font-size:11px;
+    letter-spacing:3px;
+}
+
+
+/* PASSWORD */
+
+input{
+    display:block;
+    width:min(280px,80vw);
+    margin:20px auto;
+    padding:14px;
+    text-align:center;
+    color:white;
+    background:#090313;
+    border:1px solid #c78cff;
+    outline:none;
+}
+
+
+/* PALACE */
+
+.palace{
+    position:relative;
+    width:min(620px,90vw);
+    height:230px;
+    margin:25px auto;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    gap:5px;
+}
+
+.tower{
+    position:relative;
+    width:100px;
+    height:180px;
+    background:linear-gradient(#351454,#10051d);
+    border:2px solid #c78cff;
+}
+
+.tower:before{
+    content:"";
+    position:absolute;
+    top:-35px;
+    left:0;
+    border-left:48px solid transparent;
+    border-right:48px solid transparent;
+    border-bottom:35px solid #9958d8;
+}
+
+.door{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    width:88px;
+    height:120px;
+    transform:translateX(-50%);
+    border:2px solid #e0b1ff;
+    border-radius:50px 50px 0 0;
+    background:#12051f;
+    cursor:pointer;
+}
+
+
+/* PUZZLE */
+
+.puzzle{
+    display:grid;
+    grid-template-columns:repeat(3,75px);
+    justify-content:center;
+    gap:8px;
+    margin:25px auto;
+}
+
+.tile{
+    width:75px;
+    height:65px;
+    color:white;
+    background:#120622;
+    border:1px solid #c990ff;
+    font-size:22px;
+    cursor:pointer;
+}
+
+
+/* V */
+
+.vSymbol{
+    width:155px;
+    height:155px;
+    margin:25px auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #d09cff;
+    border-radius:50%;
+    color:#f0d7ff;
+    font-size:85px;
+    text-shadow:0 0 30px #b75cff;
+    box-shadow:0 0 45px rgba(180,80,255,.25);
+    cursor:pointer;
+    transition:.5s;
+}
+
+.vSymbol:hover{
+    transform:scale(1.08) rotate(8deg);
+}
+
+
+/* GAME */
+
+.gameButtons{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:25px;
+}
+
+.gameBtn{
+    width:105px;
+    height:95px;
+    color:white;
+    background:#11051f;
+    border:1px solid #c990ff;
+    cursor:pointer;
+    font-family:Georgia,serif;
+    font-size:15px;
+}
+
+.gameBtn:hover{
+    box-shadow:0 0 20px #a54dff;
+}
+
+
+/* MYSTERY */
+
+.boxes{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin:25px;
+}
+
+.mystery{
+    width:130px;
+    height:110px;
+    color:white;
+    background:#120622;
+    border:1px solid #d09cff;
+    cursor:pointer;
+    font-family:Georgia,serif;
+}
+
+.mystery:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 25px #a952ff;
+}
+
+
+/* LETTER */
+
+.envelope{
+    width:min(330px,85vw);
+    height:190px;
+    margin:25px auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #cf98ff;
+    background:#19082f;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.letter{
+    display:none;
+    max-width:680px;
+    margin:20px auto;
+    padding:25px;
+    text-align:left;
+    line-height:2;
+    color:#ddd0e7;
+    background:#10041e;
+    border:1px solid #c48aff;
+}
+
+.letter.show{
+    display:block;
+}
+
+.final{
+    color:#f2dfff;
+    font-size:22px;
+    line-height:2;
+}
+
+@media(max-width:600px){
+
+    .photoFrame{
+        width:60vw;
+        height:45vh;
+    }
+
+    .arrow{
+        width:36px;
+        height:36px;
+    }
+
+    .puzzle{
+        grid-template-columns:repeat(3,60px);
+    }
+
+    .tile{
+        width:60px;
+        height:55px;
+    }
+
+    .tower{
+        width:75px;
+    }
+
+    .tower:before{
+        border-left-width:35px;
+        border-right-width:35px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+
+<!-- ================= PAGE 0 ================= -->
+
+<section class="page active" id="page0">
+
+<div class="card">
+
+<div class="bigIcon">🌙</div>
+
+<div class="kicker">
+A LITTLE UNIVERSE FOR
+</div>
+
+<h1>PECHI</h1>
+
+<div class="line"></div>
+
+<h2>VIVEGA 💜</h2>
+
+<p>
+Welcome to a tiny world made especially
+for our friendship.
+</p>
+
+<p>
+Memories, secrets, games and a few
+unexpected surprises are waiting.
+</p>
+
+<button class="btn" onclick="showPage(1)">
+ENTER OUR WORLD ✦
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 1 ================= -->
+
+<section class="page" id="page1">
+
+<div class="card">
+
+<div class="kicker">
+CHAPTER ONE
+</div>
+
+<div class="book">
+
+<div class="bookTitle">
+📖 OUR FRIENDSHIP BOOK
+</div>
+
+<div class="line"></div>
+
+<p>
+Every friendship has a story.
+</p>
+
+<p>
+Some chapters are full of laughter,
+some are completely random,
+and some become memories
+without us even realizing it.
+</p>
+
+<p>
+This little book is for you, Pechi.
+</p>
+
+</div>
+
+<button class="btn" onclick="showPage(2)">
+TURN THE PAGE →
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 2 ================= -->
+
+<section class="page" id="page2">
+
+<div class="card">
+
+<div class="kicker">
+CHAPTER TWO
+</div>
+
+<h1>MEMORIES 📸</h1>
+
+<div class="line"></div>
+
+<p>
+Five little pictures.
+Five little pieces of our story.
+</p>
+
+<div class="photoArea">
+
+<button class="arrow" onclick="previousPhoto()">
+‹
+</button>
+
+<div>
+
+<div class="photoFrame">
+
+<img
+id="mainPhoto"
+src="vivega1.jpg"
+alt="Vivega memory">
+
+</div>
+
+<div class="counter" id="photoCounter">
+MEMORY 01 / 05
+</div>
+
+</div>
+
+<button class="arrow" onclick="nextPhoto()">
+›
+</button>
+
+</div>
+
+<button class="btn" onclick="showPage(3)">
+NEXT SECRET →
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 3 ================= -->
+
+<section class="page" id="page3">
+
+<div class="card">
+
+<div class="kicker">
+SECRET DOOR
+</div>
+
+<h1>🔐</h1>
+
+<div class="line"></div>
+
+<h2>THE SECRET PASSWORD</h2>
+
+<p>
+Four numbers are needed to open
+the next chapter.
+</p>
+
+<input
+id="password"
+type="password"
+maxlength="4"
+placeholder="Enter password">
+
+<button class="btn" onclick="checkPassword()">
+UNLOCK
+</button>
+
+<p id="passwordMessage"></p>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 4 ================= -->
+
+<section class="page" id="page4">
+
+<div class="card">
+
+<div class="kicker">
+THE ROYAL CHAPTER
+</div>
+
+<h1>THE PALACE 👑</h1>
+
+<div class="line"></div>
+
+<p>
+Behind this door is another secret.
+</p>
+
+<div class="palace">
+
+<div class="tower"></div>
+
+<div class="tower">
+
+<div
+class="door"
+onclick="openPalace()">
+</div>
+
+</div>
+
+<div class="tower"></div>
+
+</div>
+
+<p id="palaceMessage">
+Tap the palace door.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 5 ================= -->
+
+<section class="page" id="page5">
+
+<div class="card">
+
+<div class="kicker">
+CHAPTER FIVE
+</div>
+
+<h1>PUZZLE ✨</h1>
+
+<div class="line"></div>
+
+<p>
+Find five magical symbols.
+</p>
+
+<div class="puzzle">
+
+<button class="tile" onclick="findPiece(this)">💜</button>
+<button class="tile" onclick="findPiece(this)">⭐</button>
+<button class="tile" onclick="findPiece(this)">🌙</button>
+
+<button class="tile" onclick="findPiece(this)">🦋</button>
+<button class="tile" onclick="findPiece(this)">✨</button>
+<button class="tile" onclick="findPiece(this)">🎀</button>
+
+<button class="tile" onclick="findPiece(this)">💎</button>
+<button class="tile" onclick="findPiece(this)">🌌</button>
+<button class="tile" onclick="findPiece(this)">🫶</button>
+
+</div>
+
+<p id="puzzleMessage">
+0 / 5 found
+</p>
+
+<button class="btn" onclick="showPage(6)">
+CONTINUE →
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 6 ================= -->
+
+<section class="page" id="page6">
+
+<div class="card">
+
+<div class="kicker">
+HIDDEN LETTER
+</div>
+
+<h1>FIND THE SECRET</h1>
+
+<div class="line"></div>
+
+<p>
+One letter has been hidden especially
+for Vivega.
+</p>
+
+<div
+class="vSymbol"
+onclick="revealV()">
+V
+</div>
+
+<p id="vMessage">
+Tap the letter...
+</p>
+
+<button class="btn" onclick="showPage(7)">
+NEXT SECRET →
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 7 ================= -->
+
+<section class="page" id="page7">
+
+<div class="card">
+
+<div class="kicker">
+CHAPTER SEVEN
+</div>
+
+<h1>MINI GAME 🎮</h1>
+
+<div class="line"></div>
+
+<p>
+Three doors.
+One secret surprise.
+</p>
+
+<div class="gameButtons">
+
+<button class="gameBtn" onclick="chooseDoor(1)">
+🚪<br><br>
+DOOR 1
+</button>
+
+<button class="gameBtn" onclick="chooseDoor(2)">
+🚪<br><br>
+DOOR 2
+</button>
+
+<button class="gameBtn" onclick="chooseDoor(3)">
+🚪<br><br>
+DOOR 3
+</button>
+
+</div>
+
+<p id="gameMessage">
+Choose a door 👀
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 8 ================= -->
+
+<section class="page" id="page8">
+
+<div class="card">
+
+<div class="kicker">
+CHAPTER EIGHT
+</div>
+
+<h1>MYSTERY BOXES 🎁</h1>
+
+<div class="line"></div>
+
+<p>
+Three boxes are waiting.
+</p>
+
+<div class="boxes">
+
+<button class="mystery" onclick="openBox(1)">
+🎁<br><br>
+BOX ONE
+</button>
+
+<button class="mystery" onclick="openBox(2)">
+🎁<br><br>
+BOX TWO
+</button>
+
+<button class="mystery" onclick="openBox(3)">
+🎁<br><br>
+BOX THREE
+</button>
+
+</div>
+
+<p id="boxMessage">
+Choose one...
+</p>
+
+<button class="btn" onclick="showPage(9)">
+OPEN LETTER →
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 9 ================= -->
+
+<section class="page" id="page9">
+
+<div class="card">
+
+<div class="kicker">
+A LITTLE LETTER
+</div>
+
+<h1>💌</h1>
+
+<div class="line"></div>
+
+<div
+class="envelope"
+onclick="openLetter()">
+
+💌
+<br><br>
+TAP TO OPEN
+
+</div>
+
+<div class="letter" id="letter">
+
+<h2>Dear Pechi 💜</h2>
+
+<p>
+Vivega, this little website is just a
+small collection of memories, laughs,
+random moments and friendship.
+</p>
+
+<p>
+You don't need a special occasion for
+someone to make a little surprise.
+Sometimes friendship itself is enough.
+</p>
+
+<p>
+And yes... the hidden
+<strong>V</strong> is for you. ✨
+</p>
+
+<p>
+Keep being the amazing Pechi you are.
+</p>
+
+<p>
+— Your friend 💜
+</p>
+
+</div>
+
+<button class="btn" onclick="showPage(10)">
+FINAL SURPRISE →
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAGE 10 ================= -->
+
+<section class="page" id="page10">
+
+<div class="card">
+
+<div class="bigIcon">
+🌌
+</div>
+
+<div class="kicker">
+THE FINAL CHAPTER
+</div>
+
+<h1>VIVEGA</h1>
+
+<div class="line"></div>
+
+<div class="final">
+
+PECHI 💜
+
+<br><br>
+
+Some friendships become
+their own little universe.
+
+<br><br>
+
+✨ 🌙 💜 🎀 💜 🌙 ✨
+
+<br><br>
+
+The website ends here...
+
+<br>
+
+but the memories don't.
+
+<br><br>
+
+<strong>
+OUR FRIENDSHIP STORY CONTINUES.
+</strong>
+
+</div>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* ================= STARS ================= */
+
+const starBox =
+document.getElementById("stars");
+
+for(let i=0;i<100;i++){
+
+    const star =
+    document.createElement("div");
+
+    star.className="star";
+
+    star.style.left =
+    Math.random()*100+"%";
+
+    star.style.top =
+    Math.random()*100+"%";
+
+    star.style.animationDelay =
+    Math.random()*3+"s";
+
+    starBox.appendChild(star);
+}
+
+
+/* ================= PAGE NAVIGATION ================= */
+
+function showPage(number){
+
+    const pages =
+    document.querySelectorAll(".page");
+
+    pages.forEach(function(page){
+
+        page.classList.remove("active");
+
+    });
+
+    const target =
+    document.getElementById("page"+number);
+
+    if(target){
+
+        target.classList.add("active");
+
+    }
+
+}
+
+
+/* ================= PHOTOS ================= */
+
+let photoNumber = 1;
+
+function updatePhoto(){
+
+    document.getElementById("mainPhoto").src =
+    "vivega"+photoNumber+".jpg";
+
+    document.getElementById("photoCounter").textContent =
+    "MEMORY " +
+    String(photoNumber).padStart(2,"0") +
+    " / 05";
+
+}
+
+function nextPhoto(){
+
+    photoNumber++;
+
+    if(photoNumber > 5){
+        photoNumber = 1;
+    }
+
+    updatePhoto();
+
+}
+
+function previousPhoto(){
+
+    photoNumber--;
+
+    if(photoNumber < 1){
+        photoNumber = 5;
+    }
+
+    updatePhoto();
+
+}
+
+
+/* ================= PASSWORD ================= */
+
+function checkPassword(){
+
+    const value =
+    document.getElementById("password").value;
+
+    const message =
+    document.getElementById("passwordMessage");
+
+    if(value === "1234"){
+
+        message.textContent =
+        "🔓 PASSWORD CORRECT!";
+
+        setTimeout(function(){
+
+            showPage(4);
+
+        },900);
+
+    }else{
+
+        message.textContent =
+        "🔒 Wrong password. Try again.";
+
+    }
+
+}
+
+
+/* ================= PALACE ================= */
+
+function openPalace(){
+
+    document.getElementById("palaceMessage")
+    .textContent =
+    "👑 THE PALACE IS OPEN!";
+
+    setTimeout(function(){
+
+        showPage(5);
+
+    },1000);
+
+}
+
+
+/* ================= PUZZLE ================= */
+
+let pieces = 0;
+
+function findPiece(button){
+
+    if(button.dataset.found === "yes"){
+        return;
+    }
+
+    button.dataset.found = "yes";
+
+    pieces++;
+
+    button.style.transform =
+    "scale(1.15)";
+
+    document.getElementById("puzzleMessage")
+    .textContent =
+    pieces + " / 5 found";
+
+    if(pieces >= 5){
+
+        document.getElementById("puzzleMessage")
+        .textContent =
+        "✨ PUZZLE COMPLETE! ✨";
+
+    }
+
+}
+
+
+/* ================= V ================= */
+
+function revealV(){
+
+    document.getElementById("vMessage")
+    .textContent =
+    "💜 V — the secret letter of VIVEGA! ✨";
+
+}
+
+
+/* ================= MINI GAME ================= */
+
+const winningDoor =
+Math.floor(Math.random()*3)+1;
+
+function chooseDoor(number){
+
+    const message =
+    document.getElementById("gameMessage");
+
+    if(number === winningDoor){
+
+        message.textContent =
+        "🎉 YOU FOUND THE SECRET DOOR!";
+
+        setTimeout(function(){
+
+            showPage(8);
+
+        },900);
+
+    }else{
+
+        message.textContent =
+        "😜 Not this one! Try another.";
+
+    }
+
+}
+
+
+/* ================= MYSTERY BOXES ================= */
+
+function openBox(number){
+
+    const message =
+    document.getElementById("boxMessage");
+
+    if(number === 1){
+
+        message.textContent =
+        "💜 Secret: Every friendship has little moments worth remembering.";
+
+    }
+
+    if(number === 2){
+
+        message.textContent =
+        "✨ Secret: Pechi has unlocked another part of the story.";
+
+    }
+
+    if(number === 3){
+
+        message.textContent =
+        "😂 Secret: Friendship officially survives unlimited nonsense.";
+
+    }
+
+}
+
+
+/* ================= LETTER ================= */
+
+function openLetter(){
+
+    document
+    .getElementById("letter")
+    .classList.add("show");
+
+}
+
+
+/* ================= START ================= */
+
+showPage(0);
+
+</script>
+
+</body>
+</html>
