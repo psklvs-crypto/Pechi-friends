@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Pechi 💜</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    overflow:hidden;
+    min-height:100vh;
+    font-family:Georgia,serif;
+    color:white;
+    background:
+      radial-gradient(circle at 50% 35%,#45206d,#160d35 45%,#050313 100%);
+}
+
+#stars{
+    position:fixed;
+    inset:0;
+    z-index:0;
+}
+
+.star{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:white;
+    border-radius:50%;
+    box-shadow:0 0 10px #d9a7ff;
+    animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:.2;transform:scale(.6)}
+    to{opacity:1;transform:scale(1.5)}
+}
+
+.page{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+    overflow:auto;
+}
+
+.page.show{
+    display:flex;
+    animation:appear .7s ease;
+}
+
+@keyframes appear{
+    from{opacity:0;transform:scale(.96)}
+    to{opacity:1;transform:scale(1)}
+}
+
+.box{
+    width:min(850px,94vw);
+    padding:30px 22px;
+    border:1px solid #c58cff;
+    background:rgba(12,5,35,.78);
+    box-shadow:0 0 60px rgba(196,105,255,.18);
+    backdrop-filter:blur(8px);
+}
+
+.small{
+    color:#d9a7ff;
+    font-size:11px;
+    letter-spacing:5px;
+    margin-bottom:15px;
+}
+
+h1{
+    font-size:clamp(38px,9vw,75px);
+    color:#f6eaff;
+    text-shadow:0 0 25px #b866ff;
+}
+
+h2{
+    color:#e8c9ff;
+    margin:15px;
+}
+
+.line{
+    width:90px;
+    height:1px;
+    margin:20px auto;
+    background:linear-gradient(90deg,#ff8edb,#a86bff);
+}
+
+p{
+    color:#c9bdd8;
+    line-height:1.9;
+    margin:15px auto;
+    max-width:650px;
+}
+
+button{
+    font-family:Georgia,serif;
+}
+
+.btn{
+    margin:10px;
+    padding:13px 22px;
+    color:white;
+    background:#160b35;
+    border:1px solid #d18cff;
+    cursor:pointer;
+    letter-spacing:2px;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 25px #a85cff;
+}
+
+.coverIcon{
+    font-size:65px;
+    margin-bottom:15px;
+}
+
+.photoArea{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin:20px auto;
+}
+
+.photoFrame{
+    width:min(62vw,430px);
+    height:min(52vh,430px);
+    padding:7px;
+    background:linear-gradient(135deg,#ff8edb,#a86bff,#65aaff);
+}
+
+.photoFrame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    background:#03020b;
+}
+
+.arrow{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#11072b;
+    border:1px solid #d18cff;
+    color:white;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.count{
+    color:#dca7ff;
+    font-size:11px;
+    letter-spacing:3px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:20;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.93);
+}
+
+.modal.show{display:flex}
+
+.modal img{
+    max-width:88vw;
+    max-height:80vh;
+    object-fit:contain;
+    border:5px solid #a86bff;
+}
+
+.close{
+    position:fixed;
+    right:20px;
+    top:15px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#12062b;
+    color:white;
+    border:1px solid #d18cff;
+    font-size:25px;
+    cursor:pointer;
+}
+
+input{
+    display:block;
+    width:min(300px,80vw);
+    margin:18px auto;
+    padding:13px;
+    text-align:center;
+    background:#09041b;
+    color:white;
+    border:1px solid #c98aff;
+    outline:none;
+}
+
+.puzzle{
+    display:grid;
+    grid-template-columns:repeat(3,75px);
+    gap:8px;
+    justify-content:center;
+    margin:25px auto;
+}
+
+.tile{
+    width:75px;
+    height:65px;
+    background:#10072c;
+    border:1px solid #a86bff;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.result{
+    min-height:28px;
+    color:#e3b5ff;
+}
+
+.keys{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin:25px;
+}
+
+.key{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#10072c;
+    border:1px solid #d18cff;
+    color:white;
+    font-size:30px;
+    cursor:pointer;
+}
+
+.wheel{
+    width:240px;
+    height:240px;
+    margin:25px auto;
+    border-radius:50%;
+    border:5px solid #d99cff;
+    background:conic-gradient(
+        #a24dff 0deg 60deg,
+        #ff80d0 60deg 120deg,
+        #6846d9 120deg 180deg,
+        #9e66ff 180deg 240deg,
+        #d95caf 240deg 300deg,
+        #6846d9 300deg 360deg
+    );
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:transform 3s cubic-bezier(.12,.8,.2,1);
+}
+
+.wheelCenter{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#09041b;
+    border:2px solid white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin:25px auto;
+}
+
+.card{
+    width:130px;
+    height:110px;
+    background:#10072c;
+    border:1px solid #c78bff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-7px);
+    box-shadow:0 0 25px #9f5cff;
+}
+
+.envelope{
+    width:300px;
+    height:190px;
+    margin:25px auto;
+    border:2px solid #c88cff;
+    background:#160934;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:14px;
+    letter-spacing:3px;
+}
+
+.letter{
+    display:none;
+    text-align:left;
+    max-width:650px;
+    margin:20px auto;
+    padding:25px;
+    background:#10062a;
+    border:1px solid #b879ff;
+    line-height:2;
+    color:#d7c8e8;
+}
+
+.letter.show{display:block}
+
+.final{
+    font-size:23px;
+    color:#f1dfff;
+    line-height:1.8;
+}
+
+@media(max-width:600px){
+    .photoFrame{
+        width:62vw;
+        height:48vh;
+    }
+
+    .arrow{
+        width:36px;
+        height:36px;
+    }
+
+    .puzzle{
+        grid-template-columns:repeat(3,62px);
+    }
+
+    .tile{
+        width:62px;
+        height:58px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<!-- ================= COVER ================= -->
+
+<section class="page show" id="p0">
+<div class="box">
+
+<div class="coverIcon">🌙</div>
+
+<div class="small">A SECRET PLACE FOR</div>
+
+<h1>PECHI</h1>
+
+<div class="line"></div>
+
+<h2>Vaisika • Vaishiii 💜</h2>
+
+<p>
+This isn't a birthday website.<br>
+It's just a tiny magical place made for friendship,
+memories, nonsense and all the little moments
+that make a friendship special.
+</p>
+
+<button class="btn" onclick="go(1)">
+ENTER OUR WORLD ✦
+</button>
+
+</div>
+</section>
+
+
+<!-- ================= PAGE 1 ================= -->
+
+<section class="page" id="p1">
+<div class="box">
+
+<div class="small">CHAPTER ONE</div>
+
+<h1>US 💜</h1>
+
+<div class="line"></div>
+
+<p>
+Some people become friends slowly.<br>
+Some friendships begin with one random moment
+and somehow turn into countless memories.
+</p>
+
+<p>
+This little website is just a reminder that
+even ordinary days can become favourite memories.
+</p>
+
+<button class="btn" onclick="go(2)">
+OPEN MEMORIES →
+</button>
+
+</div>
+</section>
+
+
+<!-- ================= PAGE 2 PHOTOS ================= -->
+
+<section class="page" id="p2">
+<div class="box">
+
+<div class="small">CHAPTER TWO</div>
+
+<h1>MEMORIES</h1>
+
+<div class="line"></div>
+
+<p>Five photographs. A lot of stories. 📸</p>
+
+<div class="photoArea">
+
+<button class="arrow" onclick="prevPhoto()">‹</button>
+
+<div>
+
+<div class="photoFrame" onclick="openPhoto()">
+<img id="photo" src="vivega1.jpg">
+</div>
+
+<div class="count" id="count">
+MEMORY 01 / 05
+</div>
+
+</div>
+
+<button class="arrow" onclick="nextPhoto()">›</button>
+
+</div>
+
+<button class="btn" onclick="go(3)">
+NEXT SECRET →
+</button>
+
+</div>
+</section>
+
+
+<!-- ================= PAGE 3 PUZZLE ================= -->
+
+<section class="page" id="p3">
+<div class="box">
+
+<div class="small">CHAPTER THREE</div>
+
+<h1>PUZZLE ✨</h1>
+
+<div class="line"></div>
+
+<p>
+Tap five pieces to reveal the hidden friendship message.
+</p>
+
+<div class="puzzle">
+
+<button class="tile" onclick="piece(this)">💜</button>
+<button class="tile" onclick="piece(this)">⭐</button>
+<button class="tile" onclick="piece(this)">🦋</button>
+
+<button class="tile" onclick="piece(this)">🌙</button>
+<button class="tile" onclick="piece(this)">💎</button>
+<button class="tile" onclick="piece(this)">✨</button>
+
+<button class="tile" onclick="piece(this)">🎀</button>
+<button class="tile" onclick="piece(this)">🌌</button>
+<button class="tile" onclick="piece(this)">🫶</button>
+
+</div>
+
+<div class="result" id="puzzleResult">
+0 / 5 pieces found
+</div>
+
+<br>
+
+<button class="btn" onclick="go(4)">
+CONTINUE →
+</button>
+
+</div>
+</section>
+
+
+<!-- ================= PAGE 4 PASSWORD ================= -->
+
+<section class="page" id="p4">
+<div class="box">
+
+<div class="small">SECRET DOOR</div>
+
+<h1>🔐</h1>
+
+<div class="line"></div>
+
+<h2>THE MAGIC NUMBER</h2>
+
+<p>
+A secret is waiting behind this door.
+</p>
+
+<input id="pass" type="password" placeholder="Enter password">
+
+<button class="btn" onclick="unlock()">
+UNLOCK
+</button>
+
+<div class="result" id="passResult"></div>
+
+</div>
+</section>
+
+
+<!-- ================= PAGE 5 WHEEL ================= -->
+
+<section class="page" id="p5">
+<div class="box">
+
+<div class="small">CHAPTER FIVE</div>
+
+<h1>MAGIC WHEEL</h1>
+
+<div class="line"></div>
+
+<p>
+Let the universe choose your next surprise. 🌌
+</p>
+
+<div class="wheel" id="wheel" onclick="spin()">
+<div class="wheelCenter">SPIN</div>
+</div>
+
+<div class="result" id="wheelResult">
+TAP THE WHEEL
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= PAGE 6 KEYS ================= -->
+
+<section class="page" id="p6">
+<div class="box">
+
+<div class="small">CHAPTER SIX</div>
+
+<h1>THREE KEYS 🗝️</h1>
+
+<div class="line"></div>
+
+<p>
+One of these keys opens the next secret.
+</p>
+
+<div class="keys">
+
+<button class="key" onclick="key(1)">🗝️</button>
+<button class="key" onclick="key(2)">🗝️</button>
+<button class="key" onclick="key(3)">🗝️</button>
+
+</div>
+
+<div class="result" id="keyResult">
+CHOOSE ONE
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= PAGE 7 BOXES ================= -->
+
+<section class="page" id="p7">
+<div class="box">
+
+<div class="small">CHAPTER SEVEN</div>
+
+<h1>MYSTERY BOXES 🎁</h1>
+
+<div class="line"></div>
+
+<p>
+Every box has a tiny friendship secret.
+</p>
+
+<div class="cards">
+
+<div class="card" onclick="box(1)">
+🎁<br>BOX ONE
+</div>
+
+<div class="card" onclick="box(2)">
+🎁<br>BOX TWO
+</div>
+
+<div class="card" onclick="box(3)">
+🎁<br>BOX THREE
+</div>
+
+</div>
+
+<div class="result" id="boxResult">
+OPEN A BOX
+</div>
+
+<br>
+
+<button class="btn" onclick="go(8)">
+OPEN THE LETTER →
+</button>
+
+</div>
+</section>
+
+
+<!-- ================= PAGE 8 LETTER ================= -->
+
+<section class="page" id="p8">
+<div class="box">
+
+<div class="small">CHAPTER EIGHT</div>
+
+<h1>FOR YOU 💌</h1>
+
+<div class="line"></div>
+
+<div class="envelope" onclick="letter()">
+💌 TAP TO OPEN
+</div>
+
+<div class="letter" id="letterBox">
+
+<h2>Dear Vaishiii, 💜</h2>
+
+<p>
+You itself and Ammuu — two little words
+that somehow belong in our friendship story. 😂
+</p>
+
+<p>
+Thank you for the random conversations,
+the silly moments, the laughs and all the memories
+that don't need a special occasion to matter.
+</p>
+
+<p>
+I hope we keep collecting more ridiculous,
+beautiful and unforgettable moments together.
+</p>
+
+<p>
+And yes... this tiny universe is officially
+one more memory. ✨
+</p>
+
+<p>
+— Your annoying friend 💜
+</p>
+
+</div>
+
+<br>
+
+<button class="btn" onclick="go(9)">
+FINAL SURPRISE →
+</button>
+
+</div>
+</section>
+
+
+<!-- ================= PAGE 9 FINAL ================= -->
+
+<section class="page" id="p9">
+<div class="box">
+
+<div class="coverIcon">🌌</div>
+
+<div class="small">THE FINAL CHAPTER</div>
+
+<h1>PECHI</h1>
+
+<div class="line"></div>
+
+<div class="final">
+
+This isn't the end of our story.
+
+<br><br>
+
+It's just one tiny page
+in a much bigger friendship.
+
+<br><br>
+
+💜 ✨ 🎀 🌙 ✨ 💜
+
+<br><br>
+
+No matter how many years pass,
+I hope there are always new memories,
+new jokes and new reasons to say...
+
+<br><br>
+
+<strong>
+"Remember when we did that?" 😂
+</strong>
+
+<br><br>
+
+Forever a little part
+of our universe. 💜
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= PHOTO POPUP ================= -->
+
+<div class="modal" id="modal">
+
+<button class="close" onclick="closePhoto()">×</button>
+
+<img id="bigPhoto" src="vivega1.jpg">
+
+</div>
+
+
+<script>
+
+/* ================= STARS ================= */
+
+const stars=document.getElementById("stars");
+
+for(let i=0;i<100;i++){
+
+    let s=document.createElement("div");
+
+    s.className="star";
+
+    s.style.left=Math.random()*100+"%";
+    s.style.top=Math.random()*100+"%";
+
+    s.style.animationDelay=Math.random()*3+"s";
+
+    stars.appendChild(s);
+}
+
+
+/* ================= PAGE NAVIGATION ================= */
+
+function go(number){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(function(page){
+        page.classList.remove("show");
+    });
+
+    document
+    .getElementById("p"+number)
+    .classList.add("show");
+}
+
+
+/* ================= PHOTOS ================= */
+
+let photoNumber=1;
+
+function updatePhoto(){
+
+    document.getElementById("photo").src=
+        "vivega"+photoNumber+".jpg";
+
+    document.getElementById("count").textContent=
+        "MEMORY "+
+        String(photoNumber).padStart(2,"0")+
+        " / 05";
+}
+
+function nextPhoto(){
+
+    photoNumber++;
+
+    if(photoNumber>5)
+        photoNumber=1;
+
+    updatePhoto();
+}
+
+function prevPhoto(){
+
+    photoNumber--;
+
+    if(photoNumber<1)
+        photoNumber=5;
+
+    updatePhoto();
+}
+
+function openPhoto(){
+
+    document.getElementById("bigPhoto").src=
+        "vivega"+photoNumber+".jpg";
+
+    document
+    .getElementById("modal")
+    .classList.add("show");
+}
+
+function closePhoto(){
+
+    document
+    .getElementById("modal")
+    .classList.remove("show");
+}
+
+
+/* ================= PUZZLE ================= */
+
+let pieces=0;
+
+function piece(button){
+
+    if(button.dataset.used)
+        return;
+
+    button.dataset.used="yes";
+
+    button.style.transform="scale(1.15)";
+
+    pieces++;
+
+    document.getElementById("puzzleResult").textContent=
+        pieces+" / 5 pieces found";
+
+    if(pieces>=5){
+
+        document.getElementById("puzzleResult").textContent=
+            "✨ FRIENDSHIP UNLOCKED! You found the secret! ✨";
+    }
+}
+
+
+/* ================= PASSWORD ================= */
+
+function unlock(){
+
+    let value=
+        document.getElementById("pass").value;
+
+    let result=
+        document.getElementById("passResult");
+
+    if(value==="1234"){
+
+        result.textContent=
+            "🔓 SECRET UNLOCKED ✨";
+
+        setTimeout(function(){
+            go(5);
+        },800);
+
+    }else{
+
+        result.textContent=
+            "🔒 Wrong password. Try again.";
+    }
+}
+
+
+/* ================= WHEEL ================= */
+
+let rotation=0;
+let wheelDone=false;
+
+function spin(){
+
+    if(wheelDone)
+        return;
+
+    wheelDone=true;
+
+    rotation+=
+        1440+
+        Math.floor(Math.random()*720);
+
+    document.getElementById("wheel").style.transform=
+        "rotate("+rotation+"deg)";
+
+    document.getElementById("wheelResult").textContent=
+        "✨ THE UNIVERSE IS CHOOSING...";
+
+    setTimeout(function(){
+
+        document.getElementById("wheelResult").textContent=
+            "🌙 NEXT SECRET FOUND!";
+
+        setTimeout(function(){
+            go(6);
+        },800);
+
+    },3000);
+}
+
+
+/* ================= KEYS ================= */
+
+let correctKey=
+    Math.floor(Math.random()*3)+1;
+
+function key(number){
+
+    let result=
+        document.getElementById("keyResult");
+
+    if(number===correctKey){
+
+        result.textContent=
+            "✨ CORRECT KEY! THE SECRET DOOR OPENS ✨";
+
+        setTimeout(function(){
+            go(7);
+        },900);
+
+    }else{
+
+        result.textContent=
+            "🔒 This key doesn't work...";
+    }
+}
+
+
+/* ================= BOXES ================= */
+
+function box(number){
+
+    let result=
+        document.getElementById("boxResult");
+
+    if(number===1){
+
+        result.textContent=
+            "😂 SECRET: Our friendship has officially survived too much nonsense.";
+
+    }
+
+    if(number===2){
+
+        result.textContent=
+            "💜 SECRET: Some ordinary moments become the best memories.";
+
+    }
+
+    if(number===3){
+
+        result.textContent=
+            "✨ SECRET: Official rule — embarrassing memories are never forgotten.";
+
+    }
+}
+
+
+/* ================= LETTER ================= */
+
+function letter(){
+
+    document
+    .getElementById("letterBox")
+    .classList.add("show");
+
+}
+
+
+/* ================= START ================= */
+
+go(0);
+
+</script>
+
+</body>
+</html>
